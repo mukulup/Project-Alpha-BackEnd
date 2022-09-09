@@ -36,11 +36,17 @@ router.post("/login", async (req, res) => {
     try {
         //find User
         const user = await databaseUser.findOne({email : req.body.email});
-        !user && res.status(400).json("You've entered wrong Email or Password");
+        if(!user){
+            res.status(400).json("You've entered wrong Email or Password");
+            return;
+        }
 
         //validate User
         const validUser = await bcrypt.compare(req.body.password, user.password);
-        !validUser && res.status(400).json("You've entered wrong Email or Password");
+        if(!validUser){
+            res.status(400).json("You've entered wrong Email or Password");
+            return;
+        }
 
         //send response
         res.status(200).json({_id : user._id, userFirstName : user.userFirstName});
