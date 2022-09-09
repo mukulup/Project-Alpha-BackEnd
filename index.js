@@ -14,7 +14,6 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser : true})
 .then(()=> {
     console.log("Connected to Database... YAY!");
-
 })
 .catch((err) => { console.log(err)});
  
